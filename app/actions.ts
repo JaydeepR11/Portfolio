@@ -1,17 +1,25 @@
-"use server"
+"use server";
+
+import { sendMail } from "@/lib/sendMail";
 
 export async function submitContactForm(formData: FormData) {
-  // Simulate a delay
-  await new Promise((resolve) => setTimeout(resolve, 1000))
+  const name = formData.get("name")?.toString() || "";
+  const email = formData.get("email")?.toString() || "";
+  const message = formData.get("message")?.toString() || "";
 
-  const name = formData.get("name")
-  const email = formData.get("email")
-  const message = formData.get("message")
+  if (!name || !email || !message) {
+    return { message: "All fields are required." };
+  }
 
-  // Here you would typically send an email or save to a database
-  console.log("Form submission:", { name, email, message })
-
-  return {
-    message: "Thanks for your message! I'll get back to you soon.",
+  try {
+    await sendMail({ name, email, message });
+    return {
+      message: "Thanks for your message! I'll get back to you soon.",
+    };
+  } catch (error) {
+    console.error("Mail send error:", error);
+    return {
+      message: "Failed to send message. Please try again later.",
+    };
   }
 }

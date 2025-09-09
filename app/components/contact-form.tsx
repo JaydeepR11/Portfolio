@@ -11,11 +11,16 @@ export default function ContactForm() {
   const [pending, setPending] = useState(false);
   const [message, setMessage] = useState("");
 
-  async function handleSubmit(formData: FormData) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
     setPending(true);
+    setMessage("");
+    const form = e.currentTarget;
+    const formData = new FormData(form);
     try {
       const response = await submitContactForm(formData);
       setMessage(response.message);
+      form.reset();
     } catch (error) {
       setMessage("Something went wrong. Please try again.");
     } finally {
@@ -24,8 +29,8 @@ export default function ContactForm() {
   }
 
   return (
-    <Card className="p-6">
-      <form action={handleSubmit} className="space-y-4">
+    <Card className="p-6 py-6 px-6">
+      <form onSubmit={handleSubmit} className="space-y-4">
         <div>
           <label htmlFor="name" className="block text-sm font-medium mb-2">
             Name
