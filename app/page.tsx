@@ -47,7 +47,7 @@ export default function Page() {
               <ProjectCard
                 title="Realtime Chat App"
                 description="A full-stack chat app with secure authentication, real-time messaging, and online user tracking."
-                image="/RealTimeChatApp.png?height=400&width=600"
+                image="/RealtimeChatApp.png?height=400&width=600"
                 link="https://github.com/JaydeepR11/fullstack-chat-app"
                 liveLink="https://fullstack-chat-app-e8vu.onrender.com/"
                 tags={[
